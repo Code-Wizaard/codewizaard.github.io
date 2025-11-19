@@ -1,5 +1,1006 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aydin Rahbaran - CodeWizaard</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;700&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --matrix-green: #00ff41;
+            --matrix-btn: #003d05;
+            --matrix-dark: #0a0a0a;
+            --matrix-gray: #1a1a1a;
+            --matrix-light: #33ff33;
+            --text-dim: #888;
+        }
+
+        body {
+            font-family: 'JetBrains Mono', monospace;
+            background: var(--matrix-dark);
+            color: var(--matrix-green);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* Navigation */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--matrix-green);
+            padding: 1rem 0;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--matrix-green);
+            text-decoration: none;
+            position: relative;
+        }
+
+        .logo::before {
+            content: '> ';
+            color: var(--matrix-green);
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-link {
+            color: var(--text-dim);
+            text-decoration: none;
+            font-weight: 400;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-link:hover {
+            color: var(--matrix-green);
+        }
+
+        .nav-link::before {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--matrix-green);
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::before {
+            width: 100%;
+        }
+
+        /* Mobile menu */
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--matrix-green);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            padding: 0 2rem;
+        }
+
+        .hero-content {
+            text-align: center;
+            max-width: 800px;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            position: relative;
+            animation: glitch 2s infinite;
+        }
+
+        @keyframes glitch {
+            0%, 100% { transform: translate(0); }
+            20% { transform: translate(-2px, 2px); }
+            40% { transform: translate(-2px, -2px); }
+            60% { transform: translate(2px, 2px); }
+            80% { transform: translate(2px, -2px); }
+        }
+
+        .hero .subtitle {
+            font-size: 1.5rem;
+            color: var(--matrix-light);
+            margin-bottom: 2rem;
+            font-weight: 300;
+        }
+
+        .hero .description {
+            font-size: 1.1rem;
+            color: var(--text-dim);
+            margin-bottom: 3rem;
+            line-height: 1.8;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background: transparent;
+            border: 2px solid var(--matrix-green);
+            color: var(--matrix-green);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-button:hover {
+            color: var(--matrix-dark);
+            box-shadow: 0 0 20px var(--matrix-green);
+        }
+
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: var(--matrix-green);
+            transition: left 0.3s ease;
+            z-index: -1;
+        }
+
+        .cta-button:hover::before {
+            left: 0;
+        }
+
+        /* Section Styles */
+        section {
+            padding: 5rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-header h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-header h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50px;
+            height: 3px;
+            background: var(--matrix-green);
+        }
+
+        .section-header p {
+            font-size: 1.1rem;
+            color: var(--text-dim);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* About Section */
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .about-text h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            color: var(--matrix-light);
+        }
+
+        .about-text p {
+            margin-bottom: 1.5rem;
+            color: var(--text-dim);
+            line-height: 1.8;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 2rem;
+            border: 1px solid var(--matrix-green);
+            background: rgba(0, 255, 65, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        .stat-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 255, 65, 0.2);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--matrix-green);
+            display: block;
+        }
+
+        .stat-label {
+            color: var(--text-dim);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Skills Section */
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .skill-card {
+            padding: 2rem;
+            border: 1px solid var(--matrix-green);
+            background: rgba(0, 255, 65, 0.05);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .skill-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 255, 65, 0.1), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .skill-card:hover::before {
+            left: 100%;
+        }
+
+        .skill-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 255, 65, 0.2);
+        }
+
+        .skill-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .skill-icon {
+            font-size: 2rem;
+            margin-right: 1rem;
+            color: var(--matrix-light);
+        }
+
+        .skill-name {
+            font-size: 1.3rem;
+            font-weight: 600;
+        }
+
+        .skill-description {
+            color: var(--text-dim);
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+        }
+
+        .skill-level {
+            display: flex;
+            gap: 4px;
+        }
+
+        .skill-dot {
+            width: 12px;
+            height: 12px;
+            border: 1px solid var(--matrix-green);
+            transition: all 0.3s ease;
+        }
+
+        .skill-dot.filled {
+            background: var(--matrix-green);
+            box-shadow: 0 0 10px var(--matrix-green);
+        }
+
+        /* Projects Section */
+        .projects-grid {
+            display: grid;
+            gap: 2rem;
+        }
+
+        .project-card {
+            padding: 2.5rem;
+            border: 1px solid var(--matrix-green);
+            background: rgba(0, 255, 65, 0.03);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .project-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 50px rgba(0, 255, 65, 0.15);
+            border-color: var(--matrix-light);
+        }
+
+        .project-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1.5rem;
+        }
+
+        .project-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--matrix-light);
+            margin-bottom: 0.5rem;
+        }
+
+        .project-status {
+            padding: 0.3rem 0.8rem;
+            font-size: 0.8rem;
+            border: 1px solid var(--matrix-green);
+            background: rgba(0, 255, 65, 0.1);
+            color: var(--matrix-green);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .project-description {
+            color: var(--text-dim);
+            line-height: 1.7;
+            margin-bottom: 2rem;
+        }
+
+        .project-tech {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .tech-tag {
+            padding: 0.3rem 0.8rem;
+            font-size: 0.8rem;
+            border: 1px solid var(--matrix-green);
+            background: rgba(0, 255, 255, 0.1);
+            color: var(--matrix-green);
+        }
+
+        .project-link {
+            color: var(--matrix-green);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .project-link:hover {
+            color: var(--matrix-light);
+        }
+
+        .project-link::before {
+            content: '→ ';
+        }
+
+        /* Contact Section */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .contact-card {
+            padding: 2rem;
+            border: 1px solid var(--matrix-green);
+            background: rgba(0, 255, 65, 0.05);
+            text-align: center;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+
+        .contact-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 255, 65, 0.2);
+            border-color: var(--matrix-light);
+        }
+
+        .contact-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: var(--matrix-light);
+        }
+
+        .contact-name {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--matrix-green);
+        }
+
+        .contact-handle {
+            color: var(--text-dim);
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 3rem 2rem;
+            border-top: 1px solid var(--matrix-green);
+            background: rgba(0, 255, 65, 0.02);
+        }
+
+        footer p {
+            color: var(--text-dim);
+        }
+
+        /* Matrix Rain Background */
+        .matrix-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+            opacity: 0.08;
+            filter: blur(0.5px);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .hero h1 {
+                font-size: 2.8rem;
+            }
+
+            .about-content {
+                gap: 3rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-menu {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: rgba(10, 10, 10, 0.98);
+                flex-direction: column;
+                padding: 1rem 0;
+                border-top: 1px solid var(--matrix-green);
+            }
+
+            .nav-menu.active {
+                display: flex;
+            }
+
+            .nav-menu li {
+                margin: 0.5rem 0;
+                text-align: center;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero .subtitle {
+                font-size: 1.2rem;
+            }
+
+            .about-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .stats {
+                grid-template-columns: 1fr;
+            }
+
+            .skills-grid {
+                grid-template-columns: 1fr;
+            }
+
+            section {
+                padding: 3rem 1rem;
+            }
+
+            .nav-container {
+                padding: 0 1rem;
+            }
+
+            .project-header {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .project-status {
+                align-self: flex-start;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero .description {
+                font-size: 1rem;
+            }
+
+            .section-header h2 {
+                font-size: 2rem;
+            }
+
+            .stat-item {
+                padding: 1.5rem;
+            }
+
+            .stat-number {
+                font-size: 2rem;
+            }
+
+            .project-card, .skill-card, .contact-card {
+                padding: 1.5rem;
+            }
+
+            .skill-icon {
+                font-size: 1.5rem;
+            }
+
+            .contact-icon {
+                font-size: 2.5rem;
+            }
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--matrix-dark);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--matrix-green);
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--matrix-light);
+        }
+    </style>
+</head>
 <body>
-hello there
+    <!-- Matrix Background -->
+    <canvas class="matrix-bg" id="matrix-canvas"></canvas>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="#" class="logo">CodeWizaard</a>
+            <button class="mobile-menu-btn">☰</button>
+            <ul class="nav-menu">
+                <li><a href="#about" class="nav-link">About</a></li>
+                <li><a href="#skills" class="nav-link">Skills</a></li>
+                <li><a href="#projects" class="nav-link">Projects</a></li>
+                <li><a href="#contact" class="nav-link">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <main>
+        <section class="hero">
+            <div class="hero-content">
+                <h1>Aydin Rahbaran</h1>
+                <p class="subtitle">Python Developer & Security Enthusiast</p>
+                <p class="description">
+                    Developer passionate about Python, Linux, and creating intelligent systems.
+                    CEH certified security enthusiast with experience in full-stack development.
+                </p>
+                <a href="#about" class="cta-button">Explore My Work</a>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about">
+            <div class="section-header">
+                <h2>About Me</h2>
+                <p>Developer with a passion for clean code and secure systems</p>
+            </div>
+            <div class="about-content">
+                <div class="about-text">
+                    <h3>Hello World!</h3>
+                    <p>
+                        I'm Aydin Rahbaran, a developer from Tehran, Iran who loves creating practical
+                        solutions with code. With 5+ years of experience, I've worked on everything from
+                        desktop applications to bot development and security systems.
+                    </p>
+                    <p>
+                        My journey started with Python and has expanded to include various technologies
+                        and frameworks. I'm particularly interested in cybersecurity and have obtained
+                        my CEH (Certified Ethical Hacker) certification.
+                    </p>
+                    <p>
+                        When I'm not coding, you'll find me exploring new technologies, contributing to
+                        open-source projects, or experimenting with Linux systems.
+                    </p>
+                </div>
+                <div class="stats">
+                    <div class="stat-item">
+                        <span class="stat-number">5+</span>
+                        <span class="stat-label">Years Coding</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">15+</span>
+                        <span class="stat-label">Projects Built</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">Dev</span>
+                        <span class="stat-label">Certified</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number">∞</span>
+                        <span class="stat-label">Passion for Code</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Skills Section -->
+        <section id="skills">
+            <div class="section-header">
+                <h2>Technical Skills</h2>
+                <p>Technologies and tools I work with</p>
+            </div>
+            <div class="skills-grid">
+                <div class="skill-card">
+                    <div class="skill-header">
+                        <div class="skill-icon">🐍</div>
+                        <div class="skill-name">Python</div>
+                    </div>
+                    <div class="skill-description">
+                        Primary language for development, automation, and backend systems
+                    </div>
+                    <div class="skill-level">
+                        <div class="skill-dot filled"></div>
+                        <div class="skill-dot filled"></div>
+                        <div class="skill-dot filled"></div>
+                        <div class="skill-dot filled"></div>
+                        <div class="skill-dot filled"></div>
+                    </div>
+                </div>
+
+                <div class="skill-card">
+                    <div class="skill-header">
+                        <div class="skill-icon">🐧</div>
+                        <div class="skill-name">Linux</div>
+                    </div>
+                    <div class="skill-description">
+                        Daily driver and system administration, comfortable with command line
+                    </div>
+                    <div class="skill-level">
+                        <div class="skill-dot filled"></div>
+                        <div class="skill-dot filled"></div>
+                        <div class="skill-dot filled"></div>
+                        <div class="skill-dot filled"></div>
+                        <div class="skill-dot"></div>
+                    </div>
+                </div>
+
+                <div class="skill-card">
+                    <div class="skill-header">
+                        <div class="skill-icon">🔒</div>
+                        <div class="skill-name">Security</div>
+                    </div>
+                    <div class="skill-description">
+                        CEH certified with knowledge of security best practices and ethical hacking
+                    </div>
+                    <div class="skill-level">
+                        <div class="skill-dot filled"></div>
+                        <div class="skill-dot filled"></div>
+                        <div class="skill-dot"></div>
+                        <div class="skill-dot"></div>
+                        <div class="skill-dot"></div>
+                    </div>
+                </div>
+
+                <div class="skill-card">
+                    <div class="skill-header">
+                        <div class="skill-icon">🤖</div>
+                        <div class="skill-name">Bot Development</div>
+                    </div>
+                    <div class="skill-description">
+                        Creating intelligent bots for various platforms including Telegram and Bale
+                    </div>
+                    <div class="skill-level">
+                        <div class="skill-dot filled"></div>
+                        <div class="skill-dot filled"></div>
+                        <div class="skill-dot filled"></div>
+                        <div class="skill-dot filled"></div>
+                        <div class="skill-dot"></div>
+                    </div>
+                </div>
+
+                <div class="skill-card">
+                    <div class="skill-header">
+                        <div class="skill-icon">🌐</div>
+                        <div class="skill-name">Web Development</div>
+                    </div>
+                    <div class="skill-description">
+                        Full-stack development with HTML, CSS, JavaScript, and Flask
+                    </div>
+                    <div class="skill-level">
+                        <div class="skill-dot filled"></div>
+                        <div class="skill-dot filled"></div>
+                        <div class="skill-dot filled"></div>
+                        <div class="skill-dot"></div>
+                        <div class="skill-dot"></div>
+                    </div>
+                </div>
+
+                <div class="skill-card">
+                    <div class="skill-header">
+                        <div class="skill-icon">⚡</div>
+                        <div class="skill-name">C/C++/C#</div>
+                    </div>
+                    <div class="skill-description">
+                        System programming, Software development
+                    </div>
+                    <div class="skill-level">
+                        <div class="skill-dot filled"></div>
+                        <div class="skill-dot filled"></div>
+                        <div class="skill-dot"></div>
+                        <div class="skill-dot"></div>
+                        <div class="skill-dot"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Projects Section -->
+        <section id="projects">
+            <div class="section-header">
+                <h2>Featured Projects</h2>
+                <p>Some of my favorite creations</p>
+            </div>
+            <div class="projects-grid">
+                <div class="project-card">
+                    <div class="project-header">
+                        <div>
+                            <h3 class="project-title">Basteh</h3>
+                        </div>
+                        <div class="project-status">Active</div>
+                    </div>
+                    <p class="project-description">
+                        A graphical user interface for managing pacman packages on Arch Linux.
+                        Provides an intuitive interface for package installation, removal, updates,
+                        and repository management.
+                    </p>
+                    <div class="project-tech">
+                        <span class="tech-tag">Python</span>
+                        <span class="tech-tag">Tkinter</span>
+                        <span class="tech-tag">Arch Linux</span>
+                    </div>
+                    <a href="https://github.com/sahandlinux/basteh" class="project-link">View Project</a>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-header">
+                        <div>
+                            <h3 class="project-title">Worman</h3>
+                        </div>
+                        <div class="project-status">Active</div>
+                    </div>
+                    <p class="project-description">
+                        A command-line tool for managing development workspaces. Quickly switch
+                        between projects, manage environments, and automate setup processes for
+                        different development contexts.
+                    </p>
+                    <div class="project-tech">
+                        <span class="tech-tag">Bash</span>
+                        <span class="tech-tag">Python</span>
+                        <span class="tech-tag">CLI</span>
+                    </div>
+                    <a href="https://github.com/Code-Wizaard/worman" class="project-link">View Project</a>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-header">
+                        <div>
+                            <h3 class="project-title">KomakYaar</h3>
+                        </div>
+                        <div class="project-status">Active</div>
+                    </div>
+                    <p class="project-description">
+                        A comprehensive Telegram bot for managing groups with features for moderation,
+                        automation, and utility functions. Helps maintain group秩序 and provides
+                        useful tools for community management.
+                    </p>
+                    <div class="project-tech">
+                        <span class="tech-tag">Python</span>
+                        <span class="tech-tag">Telegram API</span>
+                        <span class="tech-tag">Bot Development</span>
+                    </div>
+                    <a href="https://t.me/komak_yaar_bot" class="project-link">View Project</a>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-header">
+                        <div>
+                            <h3 class="project-title">BaleSharp</h3>
+                        </div>
+                        <div class="project-status">Completed</div>
+                    </div>
+                    <p class="project-description">
+                        A C# library for creating bots on the Bale messaging platform. Provides
+                        easy-to-use APIs for message handling, user management, and integration
+                        with Bale's features.
+                    </p>
+                    <div class="project-tech">
+                        <span class="tech-tag">C#</span>
+                        <span class="tech-tag">Bale API</span>
+                        <span class="tech-tag">Library</span>
+                    </div>
+                    <a href="https://www.nuget.org/packages/BaleSharp" class="project-link">View Project</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact">
+            <div class="section-header">
+                <h2>Get In Touch</h2>
+                <p>Let's connect and build something amazing together</p>
+            </div>
+            <div class="contact-grid">
+                <a href="mailto:codewizaard@proton.me" target="_blank" class="contact-card">
+                    <div class="contact-icon">✉️</div>
+                    <div class="contact-name">Email</div>
+                    <div class="contact-handle">codewizaard@proton.me</div>
+                </a>
+                <a href="https://github.com/Code-Wizaard" target="_blank" class="contact-card">
+                    <div class="contact-icon">💻</div>
+                    <div class="contact-name">GitHub</div>
+                    <div class="contact-handle">@Code-Wizaard</div>
+                </a>
+                <a href="https://techhub.social/@CodeWizaard" target="_blank" class="contact-card">
+                    <div class="contact-icon">🐘</div>
+                    <div class="contact-name">Mastodon</div>
+                    <div class="contact-handle">Aydin Rahbaran</div>
+                </a>
+                <a href="https://t.me/CodeWizaard" target="_blank" class="contact-card">
+                    <div class="contact-icon">📱</div>
+                    <div class="contact-name">Telegram</div>
+                    <div class="contact-handle">@CodeWizaard</div>
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2023 Aydin Rahbaran. Built with passion and lots of code 💻</p>
+    </footer>
+
+    <script>
+        // Matrix rain effect
+        const canvas = document.getElementById('matrix-canvas');
+        const ctx = canvas.getContext('2d');
+
+        canvas.height = window.innerHeight;
+        canvas.width = window.innerWidth;
+
+        const matrix = "ABCDEFGHIJKLMNOPQRSTUVWXYZ123456789@#$%^&*()*&^%+-/~{[|`]}";
+        const matrixArray = matrix.split("");
+
+        const fontSize = 10;
+        const columns = canvas.width / fontSize;
+
+        const drops = [];
+        for(let x = 0; x < columns; x++) {
+            drops[x] = 1;
+        }
+
+        function drawMatrix() {
+            ctx.fillStyle = "rgba(10, 10, 10, 0.05)";
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            ctx.fillStyle = "#00ff41";
+            ctx.font = fontSize + "px monospace";
+
+            for (let i = 0; i < drops.length; i++) {
+                const text = matrixArray[Math.floor(Math.random() * matrixArray.length)];
+                ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+
+                if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                    drops[i] = 0;
+                }
+                drops[i]++;
+            }
+        }
+
+        setInterval(drawMatrix, 33);
+
+        window.addEventListener("resize", () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+
+        // Mobile menu toggle
+        const menuBtn = document.querySelector('.mobile-menu-btn');
+        const navMenu = document.querySelector('.nav-menu');
+
+        menuBtn.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+        });
+
+        // Close menu when clicking on a link
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', () => {
+                navMenu.classList.remove('active');
+            });
+        });
+    </script>
 </body>
 </html>
+
+
